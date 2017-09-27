@@ -74,8 +74,15 @@
 
             <v-list-tile v-for="item in carts">
               <v-list-tile-title>{{item.name}}</v-list-tile-title>
-              <v-list-tile-sub-title>[{{item.count}}]</v-list-tile-sub-title>
-              <span>${{item.price}}</span>
+              <v-list-tile-action>
+                <v-text-field class="item-count"
+                              type="number"
+                              name="count"
+                              v-model="item.count"
+                              @input="updateCart"
+                ></v-text-field>
+              </v-list-tile-action>
+              <span>@${{item.price}}</span>
             </v-list-tile>
           </v-list>
           <v-card-actions>
@@ -119,15 +126,19 @@
 <script>
   import VBreadcrumbs from '../node_modules/vuetify/src/components/VBreadcrumbs/VBreadcrumbs.vue'
   import VTextField from '../node_modules/vuetify/src/components/VTextField/VTextField.vue'
+  import VListTileAction from 'vuetify/src/components/VList/VListTileAction'
 
   export default {
     components: {
+      VListTileAction,
       VTextField,
       VBreadcrumbs
     },
     created () {
       this.$bus.$on('add-cart', (item) => {
-        item.count = 1
+        if (!item.hasOwnProperty('count')) {
+          item.count = 0
+        }
         let x = this.carts.find(x => x.id === item.id)
         if (x) {
           x.count += 1
@@ -139,6 +150,14 @@
           this.total += this.carts[k].price * this.carts[k].count
         }
       })
+    },
+    methods: {
+      updateCart: function () {
+        this.total = 0
+        for (let k in this.carts) {
+          this.total += this.carts[k].price * this.carts[k].count
+        }
+      }
     },
     data () {
       return {
@@ -162,3 +181,11 @@
     }
   }
 </script>
+
+<style scoped>
+  .item-count {
+    /*margin-right: 10px;*/
+    /*margin-left: 10px;*/
+    /*width: 100px;*/
+  }
+</style>
