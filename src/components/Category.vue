@@ -25,7 +25,7 @@
             </v-card-title>
             <v-card-actions>
               <v-btn flat class="orange--text" :to="item.to">Details</v-btn>
-              <v-btn flat class="blue--text">Add to cart</v-btn>
+              <v-btn flat class="blue--text" @click="addToCart(item)">Add to cart</v-btn>
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -172,6 +172,9 @@
             }
           ]
         }
+      },
+      addToCart: function (item) {
+        this.$bus.$emit('add-cart', item)
       }
     },
     beforeMount () {
