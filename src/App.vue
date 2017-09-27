@@ -58,7 +58,9 @@
         v-model="menu"
       >
 
-        <div class="" slot="activator"><v-toolbar-title>Shopping list: ${{total}}</v-toolbar-title></div>
+        <div class="" slot="activator">
+          <v-toolbar-title>Shopping list: ${{total}}</v-toolbar-title>
+        </div>
         <v-card>
           <v-list>
             <v-list-tile>
@@ -71,7 +73,9 @@
           <v-list>
 
             <v-list-tile v-for="item in carts">
-              <v-list-tile-title>{{item.name}}</v-list-tile-title><v-list-tile-sub-title>[{{item.count}}]</v-list-tile-sub-title><span>${{item.price}}</span>
+              <v-list-tile-title>{{item.name}}</v-list-tile-title>
+              <v-list-tile-sub-title>[{{item.count}}]</v-list-tile-sub-title>
+              <span>${{item.price}}</span>
             </v-list-tile>
           </v-list>
           <v-card-actions>
@@ -115,14 +119,21 @@
 <script>
   import VBreadcrumbs from '../node_modules/vuetify/src/components/VBreadcrumbs/VBreadcrumbs.vue'
   import VTextField from '../node_modules/vuetify/src/components/VTextField/VTextField.vue'
+
   export default {
     components: {
       VTextField,
-      VBreadcrumbs},
+      VBreadcrumbs
+    },
     created () {
       this.$bus.$on('add-cart', (item) => {
         item.count = 1
-        this.carts.push(item)
+        let x = this.carts.find(x => x.id === item.id)
+        if (x) {
+          x.count += 1
+        } else {
+          this.carts.push(item)
+        }
         this.total = 0
         for (let k in this.carts) {
           this.total += this.carts[k].price * this.carts[k].count
