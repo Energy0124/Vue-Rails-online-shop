@@ -110,7 +110,7 @@
     <main>
       <router-view></router-view>
     </main>
-    <v-navigation-drawer
+    <!--<v-navigation-drawer
       temporary
       :right="right"
       v-model="rightDrawer"
@@ -123,7 +123,7 @@
           <v-list-tile-title>Switch drawer (click me)</v-list-tile-title>
         </v-list-tile>
       </v-list>
-    </v-navigation-drawer>
+    </v-navigation-drawer>-->
     <v-footer :fixed="fixed">
       <span>&copy; 2017</span>
     </v-footer>
@@ -140,6 +140,10 @@
     created () {
       this.$bus.$on('add-cart', (item) => {
         this.carts.push(item)
+        this.total = 0
+        for (let k in this.carts) {
+          this.total += this.carts[k].price
+        }
       })
     },
     data () {
@@ -157,7 +161,7 @@
         right: true,
         rightDrawer: false,
         title: 'IERG4210',
-        carts: {},
+        carts: [],
         total: 0
       }
     }
