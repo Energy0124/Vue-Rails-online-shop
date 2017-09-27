@@ -15,12 +15,12 @@
           <v-card>
             <v-card-media :src="item.src" height="300px">
             </v-card-media>
-            <router-link tag="img" to="/home" :src="item.src" height="300px">
-            </router-link>
+
             <v-card-title primary-title>
               <div>
-                <h3 class="headline mb-0">{{item.name}}</h3>
-                <b>${{item.price}}</b>
+                <router-link tag="h3" class="headline mb-0" :to="item.to">{{item.name}}
+                </router-link>
+                <h6>${{item.price}}</h6>
               </div>
             </v-card-title>
             <v-card-actions>
@@ -29,86 +29,7 @@
             </v-card-actions>
           </v-card>
         </v-flex>
-        <v-flex xs12 sm6 md4>
-          <v-card>
-            <v-card-media src="/static/products/2.jpg" height="300px">
-            </v-card-media>
-            <v-card-title primary-title>
-              <div>
-                <h3 class="headline mb-0">Kangaroo Valley Safari</h3>
-                <div>Located two hours south of Sydney in thejjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjjjjjjSouthern Highlands of New South Wales, ...</div>
-              </div>
-            </v-card-title>
-            <v-card-actions>
-              <v-btn flat class="orange--text">Share</v-btn>
-              <v-btn flat class="orange--text">Explore</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-flex>
-        <v-flex xs12 sm6 md4>
-          <v-card>
-            <v-card-media src="/static/products/3.jpg" height="300px">
-            </v-card-media>
-            <v-card-title primary-title>
-              <div>
-                <h3 class="headline mb-0">Kangaroo Valley Safari</h3>
-                <div>Located two hours south of Sydney in the <br>Southern Highlands of New South Wales, ...</div>
-              </div>
-            </v-card-title>
-            <v-card-actions>
-              <v-btn flat class="orange--text">Share</v-btn>
-              <v-btn flat class="orange--text">Explore</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-flex>
-        <v-flex xs12 sm6 md4>
-          <v-card>
-            <v-card-media src="/static/products/4.jpg" height="300px">
-            </v-card-media>
-            <v-card-title primary-title>
-              <div>
-                <h3 class="headline mb-0">Kangaroo Valley Safari</h3>
-                <div>Located two hours south of Sydney in the <br>Southern Highlands of New South Wales, ...</div>
-              </div>
-            </v-card-title>
-            <v-card-actions>
-              <v-btn flat class="orange--text">Share</v-btn>
-              <v-btn flat class="orange--text">Explore</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-flex>
-        <v-flex xs12 sm6 md4>
-          <v-card>
-            <v-card-media src="/static/products/5.jpg" height="300px">
-            </v-card-media>
-            <v-card-title primary-title>
-              <div>
-                <h3 class="headline mb-0">Kangaroo Valley Safari</h3>
-                <div>Located two hours south of Sydney in the <br>Southern Highlands of New South Wales, ...</div>
-              </div>
-            </v-card-title>
-            <v-card-actions>
-              <v-btn flat class="orange--text">Share</v-btn>
-              <v-btn flat class="orange--text">Explore</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-flex>
-        <v-flex xs12 sm6 md4>
-          <v-card>
-            <v-card-media src="/static/products/6.jpg" height="300px">
-            </v-card-media>
-            <v-card-title primary-title>
-              <div>
-                <h3 class="headline mb-0">Kangaroo Valley Safari</h3>
-                <div>Located two hours south of Sydney in the <br>Southern Highlands of New South Wales, ...</div>
-              </div>
-            </v-card-title>
-            <v-card-actions>
-              <v-btn flat class="orange--text">Share</v-btn>
-              <v-btn flat class="orange--text">Explore</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-flex>
+
       </v-layout>
     </v-container>
   </div>
@@ -119,6 +40,7 @@
     name: 'category',
     watch: {
       '$route' (to, from) {
+        this.getProducts()
         this.breadcrumbs = [
           {
             text: 'Home',
@@ -132,6 +54,128 @@
           }
         ]
       }
+    },
+    methods: {
+      getProducts: function () {
+        if (this.$route.params.categoryId === '2') {
+          this.products = [
+            {
+              id: 7,
+              category: 2,
+              src: '/static/products/7.jpg',
+              name: 'Nanami',
+              desc: 'Nanami <3',
+              price: 1,
+              to: '/category/2/product/7'
+            },
+            {
+              id: 8,
+              category: 2,
+              src: '/static/products/8.jpg',
+              name: 'Touhou',
+              desc: 'touhou is great!',
+              price: 10,
+              to: '/category/2/product/8'
+            },
+            {
+              id: 9,
+              category: 2,
+              src: '/static/products/9.jpg',
+              name: 'Nanami 2',
+              desc: 'Nanami in full size',
+              price: 100,
+              to: '/category/2/product/9'
+            },
+            {
+              id: 10,
+              category: 2,
+              src: '/static/products/10.jpg',
+              name: 'Thinkink',
+              desc: 'Nanami thinking',
+              price: 1,
+              to: '/category/2/product/10'
+            },
+            {
+              id: 11,
+              category: 2,
+              src: '/static/products/11.jpg',
+              name: 'Portal',
+              desc: 'Portal  is great!',
+              price: 10,
+              to: '/category/2/product/11'
+            },
+            {
+              id: 12,
+              category: 2,
+              src: '/static/products/12.jpg',
+              name: 'Nanami 3',
+              desc: 'Nanami 3 in full size',
+              price: 100,
+              to: '/category/2/product/12'
+            }
+          ]
+        } else {
+          this.products = [
+            {
+              id: 1,
+              category: 1,
+              src: '/static/products/1.jpg',
+              name: 'Nanami',
+              desc: 'Nanami <3',
+              price: 1,
+              to: '/category/1/product/1'
+            },
+            {
+              id: 2,
+              category: 1,
+              src: '/static/products/2.jpg',
+              name: 'Touhou',
+              desc: 'touhou is great!',
+              price: 10,
+              to: '/category/1/product/2'
+            },
+            {
+              id: 3,
+              category: 1,
+              src: '/static/products/3.jpg',
+              name: 'Nanami 2',
+              desc: 'Nanami in full size',
+              price: 100,
+              to: '/category/1/product/3'
+            },
+            {
+              id: 4,
+              category: 1,
+              src: '/static/products/4.jpg',
+              name: 'Thinkink',
+              desc: 'Nanami thinking',
+              price: 1,
+              to: '/category/1/product/4'
+            },
+            {
+              id: 5,
+              category: 1,
+              src: '/static/products/5.jpg',
+              name: 'Portal',
+              desc: 'Portal  is great!',
+              price: 10,
+              to: '/category/1/product/5'
+            },
+            {
+              id: 6,
+              category: 1,
+              src: '/static/products/6.jpg',
+              name: 'Nanami 3',
+              desc: 'Nanami 3 in full size',
+              price: 100,
+              to: '/category/1/product/6'
+            }
+          ]
+        }
+      }
+    },
+    beforeMount () {
+      this.getProducts()
     },
     data () {
       return {
@@ -153,13 +197,56 @@
             id: 1,
             category: 1,
             src: '/static/products/1.jpg',
-            name: 'p1',
-            desc: 'test',
-            price: 10,
+            name: 'Nanami',
+            desc: 'Nanami <3',
+            price: 1,
             to: '/category/1/product/1'
           },
-          {},
-          {}
+          {
+            id: 2,
+            category: 1,
+            src: '/static/products/2.jpg',
+            name: 'Touhou',
+            desc: 'touhou is great!',
+            price: 10,
+            to: '/category/1/product/2'
+          },
+          {
+            id: 3,
+            category: 1,
+            src: '/static/products/3.jpg',
+            name: 'Nanami 2',
+            desc: 'Nanami in full size',
+            price: 100,
+            to: '/category/1/product/3'
+          },
+          {
+            id: 4,
+            category: 1,
+            src: '/static/products/4.jpg',
+            name: 'Thinkink',
+            desc: 'Nanami thinking',
+            price: 1,
+            to: '/category/1/product/4'
+          },
+          {
+            id: 5,
+            category: 1,
+            src: '/static/products/5.jpg',
+            name: 'Portal',
+            desc: 'Portal  is great!',
+            price: 10,
+            to: '/category/1/product/5'
+          },
+          {
+            id: 6,
+            category: 1,
+            src: '/static/products/6.jpg',
+            name: 'Nanami 3',
+            desc: 'Nanami 3 in full size',
+            price: 100,
+            to: '/category/1/product/6'
+          }
         ]
       }
     }

@@ -9,111 +9,223 @@
       </v-breadcrumbs-item>
     </v-breadcrumbs>
     <h1>{{ msg }}</h1>
-    <v-card>
-      <v-card-media :src="item.src" height="550px">
-      </v-card-media>
-      <router-link tag="v-card-media" to="/home" :src="item.src" height="300px">
-      </router-link>
-      <v-card-title primary-title>
-        <div>
-          <h3 class="headline mb-0">{{item.name}}</h3>
-          <div>{{item.desc}}</div>
-          <b>${{item.price}}</b>
-        </div>
-      </v-card-title>
-      <v-card-actions>
+    <v-flex xs12 sm12 md8>
+      <v-card>
+        <v-card-media :src="item.src" height="500px">
+        </v-card-media>
+        <router-link tag="v-card-media" to="/home" :src="item.src" height="300px">
+        </router-link>
+        <v-card-title primary-title>
+          <div>
+            <h3 class="headline mb-0">{{item.name}}</h3>
+            <div>{{item.desc}}</div>
+            <b>${{item.price}}</b>
+          </div>
+        </v-card-title>
+        <v-card-actions>
 
-        <v-btn flat class="blue--text">Add to cart</v-btn>
-      </v-card-actions>
-    </v-card>
+          <v-btn flat class="blue--text" @click="addToCart(item)">Add to cart</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-flex>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'product',
-  watch: {
-    '$route' (to, from) {
-      this.breadcrumbs = [
-        {
-          text: 'Home',
-          to: '/home'
-        },
-        {
-          text: 'Category ' + this.$route.params.categoryId,
-          to: '/category/' + this.$route.params.categoryId
-        },
-        {
-          text: 'Product ' + this.$route.params.productId,
-          to: '/category/' + this.$route.params.categoryId + '/product/' + this.$route.params.productId
-        }
-      ]
-    }
-  },
-  data () {
-    return {
-      msg: 'product',
-      breadcrumbs: [
-        {
-          text: 'Home',
-          disabled: false,
-          to: '/home'
-        },
-        {
-          text: 'Category ' + this.$route.params.categoryId,
-          disabled: false,
-          to: '/category/' + this.$route.params.categoryId
-        },
-        {
-          text: 'Product ' + this.$route.params.productId,
-          disabled: false,
-          to: '/category/' + this.$route.params.categoryId + '/product/' + this.$route.params.productId
-        }
-      ],
-      item: {
-        id: 1,
-        category: 1,
-        src: '/static/products/1.jpg',
-        name: 'p1',
-        desc: 'test',
-        price: 10,
-        to: '/category/1/product/1'
+  export default {
+    name: 'product',
+    watch: {
+      '$route' (to, from) {
+        this.getProduct()
+        this.breadcrumbs = [
+          {
+            text: 'Home',
+            to: '/home'
+          },
+          {
+            text: 'Category ' + this.$route.params.categoryId,
+            to: '/category/' + this.$route.params.categoryId
+          },
+          {
+            text: 'Product ' + this.$route.params.productId,
+            to: '/category/' + this.$route.params.categoryId + '/product/' + this.$route.params.productId
+          }
+        ]
+      }
+    },
+    methods: {
+      getProduct: function () {
+        this.item = this.products[parseInt(this.$route.params.productId, 10) - 1]
       },
-      products: [
-        {
+      addToCart: function (item) {
+        this.$bus.$emit('add-cart', item)
+      }
+    },
+    beforeMount () {
+      this.getProduct()
+    },
+    data () {
+      return {
+        msg: 'product',
+        breadcrumbs: [
+          {
+            text: 'Home',
+            disabled: false,
+            to: '/home'
+          },
+          {
+            text: 'Category ' + this.$route.params.categoryId,
+            disabled: false,
+            to: '/category/' + this.$route.params.categoryId
+          },
+          {
+            text: 'Product ' + this.$route.params.productId,
+            disabled: false,
+            to: '/category/' + this.$route.params.categoryId + '/product/' + this.$route.params.productId
+          }
+        ],
+        item: {
           id: 1,
           category: 1,
           src: '/static/products/1.jpg',
-          name: 'p1',
-          desc: 'test',
-          price: 10,
+          name: 'Nanami',
+          desc: 'Nanami <3',
+          price: 1,
           to: '/category/1/product/1'
         },
-        {},
-        {}
-      ]
+        products: [
+          {
+            id: 1,
+            category: 1,
+            src: '/static/products/1.jpg',
+            name: 'Nanami',
+            desc: 'Nanami <3',
+            price: 1,
+            to: '/category/1/product/1'
+          },
+          {
+            id: 2,
+            category: 1,
+            src: '/static/products/2.jpg',
+            name: 'Touhou',
+            desc: 'touhou is great!',
+            price: 10,
+            to: '/category/1/product/2'
+          },
+          {
+            id: 3,
+            category: 1,
+            src: '/static/products/3.jpg',
+            name: 'Nanami 2',
+            desc: 'Nanami in full size',
+            price: 100,
+            to: '/category/1/product/3'
+          },
+          {
+            id: 4,
+            category: 1,
+            src: '/static/products/4.jpg',
+            name: 'Thinkink',
+            desc: 'Nanami thinking',
+            price: 1,
+            to: '/category/1/product/4'
+          },
+          {
+            id: 5,
+            category: 1,
+            src: '/static/products/5.jpg',
+            name: 'Portal',
+            desc: 'Portal  is great!',
+            price: 10,
+            to: '/category/1/product/5'
+          },
+          {
+            id: 6,
+            category: 1,
+            src: '/static/products/6.jpg',
+            name: 'Nanami 3',
+            desc: 'Nanami 3 in full size',
+            price: 100,
+            to: '/category/1/product/6'
+          },
+          {
+            id: 7,
+            category: 2,
+            src: '/static/products/7.jpg',
+            name: 'Nanami',
+            desc: 'Nanami <3',
+            price: 1,
+            to: '/category/2/product/7'
+          },
+          {
+            id: 8,
+            category: 2,
+            src: '/static/products/8.jpg',
+            name: 'Touhou',
+            desc: 'touhou is great!',
+            price: 10,
+            to: '/category/2/product/8'
+          },
+          {
+            id: 9,
+            category: 2,
+            src: '/static/products/9.jpg',
+            name: 'Nanami 2',
+            desc: 'Nanami in full size',
+            price: 100,
+            to: '/category/2/product/9'
+          },
+          {
+            id: 10,
+            category: 2,
+            src: '/static/products/10.jpg',
+            name: 'Thinkink',
+            desc: 'Nanami thinking',
+            price: 1,
+            to: '/category/2/product/10'
+          },
+          {
+            id: 11,
+            category: 2,
+            src: '/static/products/11.jpg',
+            name: 'Portal',
+            desc: 'Portal  is great!',
+            price: 10,
+            to: '/category/2/product/11'
+          },
+          {
+            id: 12,
+            category: 2,
+            src: '/static/products/12.jpg',
+            name: 'Nanami 3',
+            desc: 'Nanami 3 in full size',
+            price: 100,
+            to: '/category/2/product/12'
+          }
+        ]
+      }
     }
   }
-}
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
+  h1, h2 {
+    font-weight: normal;
+  }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
 
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
+  li {
+    display: inline-block;
+    margin: 0 10px;
+  }
 
-a {
-  color: #42b983;
-}
+  a {
+    color: #42b983;
+  }
 </style>
