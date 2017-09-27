@@ -2,6 +2,10 @@
 
 > A Vue.js project
 
+Name: Ling Leong
+
+SID: 1155062557
+
 ## Build Setup
 
 ``` bash
