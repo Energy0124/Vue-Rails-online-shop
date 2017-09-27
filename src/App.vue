@@ -61,41 +61,23 @@
         <div class="" slot="activator"><v-toolbar-title>Shopping list: ${{total}}</v-toolbar-title></div>
         <v-card>
           <v-list>
-            <v-list-tile avatar>
+            <v-list-tile>
               <v-list-tile-content>
-                <v-list-tile-title>John Leider</v-list-tile-title>
-                <v-list-tile-sub-title>Founder of Vuetify.js</v-list-tile-sub-title>
+                <v-list-tile-title>Shopping Cart (Total: ${{total}})</v-list-tile-title>
               </v-list-tile-content>
-              <v-list-tile-action>
-                <v-btn
-                  icon
-                  :class="fav ? 'red--text' : ''"
-                  @click="fav = !fav"
-                >
-                  <v-icon>favorite</v-icon>
-                </v-btn>
-              </v-list-tile-action>
             </v-list-tile>
           </v-list>
           <v-divider></v-divider>
           <v-list>
-            <v-list-tile>
-              <v-list-tile-action>
-                <v-switch v-model="message" color="purple"></v-switch>
-              </v-list-tile-action>
-              <v-list-tile-title>Enable messages</v-list-tile-title>
-            </v-list-tile>
-            <v-list-tile>
-              <v-list-tile-action>
-                <v-switch v-model="hints" color="purple"></v-switch>
-              </v-list-tile-action>
-              <v-list-tile-title>Enable hints</v-list-tile-title>
+
+            <v-list-tile v-for="item in carts">
+              <v-list-tile-title>{{item.name}}</v-list-tile-title><v-list-tile-sub-title>[{{item.count}}]</v-list-tile-sub-title><span>${{item.price}}</span>
             </v-list-tile>
           </v-list>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn flat @click="menu = false">Cancel</v-btn>
-            <v-btn primary flat @click="menu = false">Save</v-btn>
+            <v-btn primary flat @click="menu = false">Checkout</v-btn>
           </v-card-actions>
         </v-card>
       </v-menu>
@@ -139,10 +121,11 @@
       VBreadcrumbs},
     created () {
       this.$bus.$on('add-cart', (item) => {
+        item.count = 1
         this.carts.push(item)
         this.total = 0
         for (let k in this.carts) {
-          this.total += this.carts[k].price
+          this.total += this.carts[k].price * this.carts[k].count
         }
       })
     },
@@ -161,6 +144,7 @@
         right: true,
         rightDrawer: false,
         title: 'IERG4210',
+        menu: false,
         carts: [],
         total: 0
       }
