@@ -48,8 +48,7 @@
     data () {
       return {
         drawer: true,
-        title: 'IERG4210',
-        menu: false
+        title: 'IERG4210'
       }
     }
   }

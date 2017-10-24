@@ -44,10 +44,6 @@
 </template>
 
 <script>
-  //  import VBreadcrumbs from 'vuetify/src/components/VBreadcrumbs/VBreadcrumbs'
-  //  import VTextField from 'vuetify/src/components/VTextField/VTextField'
-  //  import VListTileAction from 'vuetify/src/components/VList/VListTileAction'
-  //  import VListTileTitle from 'vuetify/src/components/VList/VList.vue'
   export default {
     components: {
     },
@@ -79,19 +75,6 @@
     },
     data () {
       return {
-        clipped: true,
-        drawer: true,
-        fixed: false,
-        items: [
-          {icon: 'bubble_chart', title: 'Category1', href: '/category/1'},
-          {icon: 'bubble_chart', title: 'Category2', href: '/category/2'},
-          {icon: 'bubble_chart', title: 'Category3', href: '/category/3'},
-          {icon: 'bubble_chart', title: 'Category4', href: '/category/4'}
-        ],
-        miniVariant: false,
-        right: true,
-        rightDrawer: false,
-        title: 'IERG4210',
         menu: false,
         carts: [],
         total: 0
