@@ -41,7 +41,7 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>-->
-    <v-footer :fixed="fixed">
+    <v-footer :fixed="false">
       <span>&copy; 2017</span>
     </v-footer>
   </v-app>
