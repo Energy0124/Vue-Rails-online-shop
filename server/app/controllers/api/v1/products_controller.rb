@@ -1,43 +1,47 @@
 module Api
   module V1
-    class NotesController < ApiController
+    class ProductsController < ApiController
+      # todo: fix permission
+      skip_before_action :auth_with_token!, except: []
+
+
       def index
-        render json: current_user.notes.all
+        render json: Product.all
       end
 
       def show
-        render json: current_user.notes.find(params[:id])
+        render json: Product.find(params[:id])
       end
 
       def create
-        note = current_user.notes.new(note_params)
-        if note.save
-          render json: note, status: :created
+        product = Product.new
+        if product.save
+          render json: product, status: :created
         else
-          render_error(note.errors.full_messages[0], :unprocessable_entity)
+          render_error(product.errors.full_messages[0], :unprocessable_entity)
         end
       end
 
       def update
-        note = current_user.notes.find(params[:id])
-        if note.update(note_params)
-          render json: note
+        product = Product.find(params[:id])
+        if product.update(product_params)
+          render json: product
         else
-          render_error(note.errors.full_messages[0], :unprocessable_entity)
+          render_error(product.errors.full_messages[0], :unprocessable_entity)
         end
       end
 
       def destroy
-        note = current_user.notes.find(params[:id])
-        note.destroy
+        product = Product.find(params[:id])
+        product.destroy
         head :no_content
       end
 
       private
-
-      def note_params
-        params.require(:note).permit(:title, :content)
+      def product_params
+        params.require(:product).permit(:name)
       end
+
     end
   end
 end

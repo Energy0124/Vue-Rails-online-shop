@@ -17,6 +17,8 @@ Rails.application.routes.draw do
       post   'users/reset_password' => 'users#reset_password'
       resources :users, only: [:create, :destroy]
       resources :notes
+      resources :products
+      resources :categories
     end
   end
 
