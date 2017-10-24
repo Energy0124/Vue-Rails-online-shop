@@ -1,0 +1,25 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  timeout: 5000
+
+development:
+  <<: *default
+  database: ierg4210-api_development
+  username: ierg4210-api_user
+  password: ierg4210-api_pass
+  template: template0
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  <<: *default
+  database: ierg4210-api_test
+  username: ierg4210-api_user
+  password: ierg4210-api_pass
+  template: template0
+
+production:
+  <<: *default

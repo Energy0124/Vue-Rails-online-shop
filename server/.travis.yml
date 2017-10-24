@@ -1,0 +1,12 @@
+language: ruby
+rvm:
+  - 2.3.0-p0
+services:
+  - postgresql
+before_script:
+  - psql -c "CREATE USER ierg4210-api_user WITH PASSWORD 'ierg4210-api_pass';" -U postgres
+  - psql -c "ALTER USER ierg4210-api_user CREATEDB;" -U postgres
+  - bin/rails db:setup
+addons:
+  code_climate:
+    repo_token: d52e0b4bc1ef543d8484a456329b3cff32bf93eb2ebf11df139e06694752ca57
