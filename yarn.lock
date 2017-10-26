@@ -4698,9 +4698,19 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
+vue-base64-file-upload@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/vue-base64-file-upload/-/vue-base64-file-upload-1.0.4.tgz#1ef8e44c2171cd1e74197baf143715288f66a012"
+  dependencies:
+    vue "^2.1.10"
+
 vue-breadcrumbs@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vue-breadcrumbs/-/vue-breadcrumbs-1.1.2.tgz#b83e03693d07628614c3d5683d74a5dd20d36f6c"
+
+vue-config@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/vue-config/-/vue-config-1.0.0.tgz#f6e6704845808fbfa3b17300fc7ffd624c2ca42e"
 
 vue-hot-reload-api@^2.1.0:
   version "2.1.0"
@@ -4751,6 +4761,10 @@ vue-template-compiler@^2.4.2:
 vue-template-es2015-compiler@^1.5.3:
   version "1.5.3"
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.5.3.tgz#22787de4e37ebd9339b74223bc467d1adee30545"
+
+vue@^2.1.10:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.2.tgz#fd367a87bae7535e47f9dc5c9ec3b496e5feb5a4"
 
 vue@^2.4.2:
   version "2.4.4"

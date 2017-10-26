@@ -39,6 +39,16 @@
               label="Image Url"
               v-model="product.image_url"
             ></v-text-field>
+            <vue-base64-file-upload
+              class="v1"
+              accept='image/png,image/gif,image/jpeg'
+              image-class="v1-image"
+              input-class="v1-input"
+              :max-size="customImageMaxSize"
+              @size-exceeded="onSizeExceeded"
+              @file="onFile"
+              @load="onLoad">
+            </vue-base64-file-upload>
             <v-text-field
               label="Category"
               v-model="product.category_id"
@@ -57,7 +67,7 @@
           <v-list-tile avatar v-for="product in products" v-bind:key="product.id"
                        @click.stop="selectProduct(product.id)">
             <v-list-tile-avatar>
-              <img v-bind:src="product.image_url"/>
+              <img v-bind:src=" this.$config.IMAGE_ROOT + product.image_url"/>
             </v-list-tile-avatar>
             <v-list-tile-content>
               <v-list-tile-title v-text="product.name"></v-list-tile-title>
@@ -115,8 +125,14 @@
 </template>
 
 <script>
+  import VueBase64FileUpload from 'vue-base64-file-upload'
+  import Vue from 'vue'
   import { mapGetters } from 'vuex'
   export default {
+    components: {
+      VueBase64FileUpload,
+      Vue
+    },
     computed: {
       btnProductText: function () {
         return this.updateProduct ? 'Save changes' : ' Create new'
@@ -131,6 +147,7 @@
     },
     data () {
       return {
+        customImageMaxSize: 10,
         validProduct: true,
         validCategory: true,
         items: ['Products', 'Categories'],
@@ -145,6 +162,17 @@
       this.$store.dispatch('getAllCategories')
     },
     methods: {
+      onFile (file) {
+        console.log(file) // file object
+      },
+
+      onLoad (dataUri) {
+        this.product.picture = dataUri
+      },
+
+      onSizeExceeded (size) {
+        alert(`Image ${size}Mb size exceeds limits of ${this.customImageMaxSize}Mb!`)
+      },
       selectProduct (id) {
         this.product = Object.assign({}, this.product, this.products.find(p => p.id === id))
         this.updateProduct = true

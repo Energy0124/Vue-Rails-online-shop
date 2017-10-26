@@ -13,6 +13,13 @@ Vue.use(Vuetify)
 Vue.use(VueResource)
 Vue.use(VueBreadcrumbs)
 
+const vueConfig = require('vue-config')
+const configs = {
+  IMAGE_ROOT: 'http://localhost:3000' // It's better to require a config file
+}
+
+Vue.use(vueConfig, configs)
+
 Vue.config.productionTip = false
 
 // set the API root so we can use relative url's in our actions.

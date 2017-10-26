@@ -23,7 +23,12 @@ module Api
         @product = Product.new(product_params)
 
         if @product.save
-          render json: @product, status: :created, location: @product
+          @product.image_url = @product.picture.url
+          if @product.save
+            render json: @product, status: :created, location: @product
+          else
+            render json: @product.errors, status: :unprocessable_entity
+          end
         else
           render json: @product.errors, status: :unprocessable_entity
         end
@@ -51,7 +56,7 @@ module Api
 
       # Only allow a trusted parameter "white list" through.
       def product_params
-        params.require(:product).permit(:name, :category_id, :price, :description, :image_url)
+        params.require(:product).permit(:name, :category_id, :price, :description, :image_url, :picture, :image, :image_file_name)
       end
 
     end
