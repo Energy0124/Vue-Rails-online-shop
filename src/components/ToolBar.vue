@@ -1,6 +1,6 @@
 <template>
-  <v-toolbar fixed>
-    <v-toolbar-side-icon @click.stop="drawer = !drawer" light></v-toolbar-side-icon>
+  <v-toolbar dark fixed>
+    <v-toolbar-side-icon @click.stop="drawer = !drawer" dark></v-toolbar-side-icon>
     <!--     <v-btn
            icon
            light
@@ -27,7 +27,16 @@
 
     <!--<breadcrumbs></breadcrumbs>-->
     <v-toolbar-title v-text="title"></v-toolbar-title>
+    <v-toolbar-items>
+      <v-btn dark
+        to="/admin"
+      >
+        Admin
+      </v-btn>
+    </v-toolbar-items>
     <v-spacer></v-spacer>
+
+
     <ShoppingCart></ShoppingCart>
     <!--<v-btn
       icon
@@ -53,3 +62,9 @@
     }
   }
 </script>
+
+<style scoped>
+  .admin-btn {
+
+  }
+</style>

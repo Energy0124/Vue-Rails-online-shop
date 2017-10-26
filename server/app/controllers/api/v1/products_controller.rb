@@ -1,45 +1,57 @@
 module Api
   module V1
     class ProductsController < ApiController
+      before_action :set_product, only: [:show, :update, :destroy]
       # todo: fix permission
       skip_before_action :auth_with_token!, except: []
 
 
+      # GET /products
       def index
-        render json: Product.all
+        @products = Product.all
+
+        render json: @products
       end
 
+      # GET /products/1
       def show
-        render json: Product.find(params[:id])
+        render json: @product
       end
 
+      # POST /products
       def create
-        product = Product.new
-        if product.save
-          render json: product, status: :created
+        @product = Product.new(product_params)
+
+        if @product.save
+          render json: @product, status: :created, location: @product
         else
-          render_error(product.errors.full_messages[0], :unprocessable_entity)
+          render json: @product.errors, status: :unprocessable_entity
         end
       end
 
+      # PATCH/PUT /products/1
       def update
-        product = Product.find(params[:id])
-        if product.update(product_params)
-          render json: product
+        if @product.update(product_params)
+          render json: @product
         else
-          render_error(product.errors.full_messages[0], :unprocessable_entity)
+          render json: @product.errors, status: :unprocessable_entity
         end
       end
 
+      # DELETE /products/1
       def destroy
-        product = Product.find(params[:id])
-        product.destroy
-        head :no_content
+        @product.destroy
       end
 
       private
+      # Use callbacks to share common setup or constraints between actions.
+      def set_product
+        @product = Product.find(params[:id])
+      end
+
+      # Only allow a trusted parameter "white list" through.
       def product_params
-        params.require(:product).permit(:name)
+        params.require(:product).permit(:name, :category_id, :price, :description, :image_url)
       end
 
     end

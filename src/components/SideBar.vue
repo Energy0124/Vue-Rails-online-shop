@@ -8,15 +8,15 @@
     <v-list>
       <v-list-tile
         value="true"
-        v-for="(item, i) in items"
+        v-for="(item, i) in categories"
         :key="i"
-        :to="item.href"
+        :to="'/category/'+item.id"
       >
         <v-list-tile-action>
           <v-icon light>{{item.icon}}</v-icon>
         </v-list-tile-action>
         <v-list-tile-content>
-          <v-list-tile-title v-text="item.title"></v-list-tile-title>
+          <v-list-tile-title v-text="item.name"></v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
     </v-list>
@@ -24,10 +24,17 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
   export default {
+    computed: mapGetters({
+      categories: 'allCategories'
+    }),
     components: {
     },
     methods: {
+    },
+    created () {
+      this.$store.dispatch('getAllCategories')
     },
     data () {
       return {

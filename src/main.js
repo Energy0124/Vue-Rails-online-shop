@@ -6,10 +6,17 @@ import './stylus/main.styl'
 import App from './App'
 import router from './router'
 import VueBreadcrumbs from 'vue-breadcrumbs'
+import store from './store'
+import VueResource from 'vue-resource'
 
 Vue.use(Vuetify)
+Vue.use(VueResource)
 Vue.use(VueBreadcrumbs)
+
 Vue.config.productionTip = false
+
+// set the API root so we can use relative url's in our actions.
+Vue.http.options.root = 'http://localhost:3000'
 
 const EventBus = new Vue()
 
@@ -24,6 +31,7 @@ Object.defineProperties(Vue.prototype, {
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: {App}
 })

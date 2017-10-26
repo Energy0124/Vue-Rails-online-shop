@@ -50,7 +50,7 @@ module Api
 
       # Only allow a trusted parameter "white list" through.
       def category_params
-        params.fetch(:category, {}).permit(:name)
+        params.require(:category).permit(:name)
       end
     end
   end
