@@ -39,9 +39,21 @@
     name: 'product',
     created () {
       this.$store.dispatch('getAllProducts')
+      this.$store.dispatch('getAllCategories')
     },
     computed: {
       breadcrumbs: function () {
+        let itemName = 'loading'
+        let categoryName = 'loading'
+        let categoryId = 'loading'
+        if (typeof this.item !== 'undefined') {
+          itemName = this.item.name
+          categoryId = this.item.category_id
+          let category = this.categories.find(p => p.id === categoryId)
+          if (typeof category !== 'undefined') {
+            categoryName = category.name
+          }
+        }
         return [
           {
             text: 'Home',
@@ -49,12 +61,12 @@
             to: '/home'
           },
           {
-            text: 'Category ' + this.item.category_id,
+            text: categoryName,
             disabled: false,
-            to: '/category/' + this.item.category_id
+            to: '/category/' + categoryId
           },
           {
-            text: 'Product ' + this.$route.params.productId,
+            text: itemName,
             disabled: false,
             to: '/product/' + this.$route.params.productId
           }
@@ -64,7 +76,8 @@
         return this.products.find(p => p.id === (parseInt(this.$route.params.productId, 10)))
       },
       ...mapGetters({
-        products: 'allProducts'
+        products: 'allProducts',
+        categories: 'allCategories'
       })
     },
     watch: {
@@ -120,7 +133,8 @@
             disabled: false,
             to: '/product/' + this.$route.params.productId
           }
-        ]*//*,
+        ]*/
+        /*,
          item: {
          id: 1,
          category: 1,

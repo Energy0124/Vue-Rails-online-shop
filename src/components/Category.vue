@@ -223,7 +223,8 @@
     },
     data () {
       return {
-        msg: 'category'/*,
+        msg: 'category'
+        /*,
          breadcrumbs: [
          {
          text: 'Home',
@@ -235,7 +236,8 @@
          disabled: false,
          to: '/category/' + this.$route.params.categoryId
          }
-         ]*//*,
+         ]*/
+        /*,
          products: [
          {
          id: 1,

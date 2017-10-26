@@ -48,7 +48,7 @@
               @click="submitProduct"
               :disabled="!validProduct"
             >
-              submit
+              {{btnProductText}}
             </v-btn>
             <v-btn @click="clearProduct">clear</v-btn>
           </v-form>
@@ -90,7 +90,7 @@
               @click="submitCategory"
               :disabled="!validCategory"
             >
-              submit
+              {{btnCategoryText}}
             </v-btn>
             <v-btn @click="clearCategory">clear</v-btn>
           </v-form>
@@ -118,6 +118,12 @@
   import { mapGetters } from 'vuex'
   export default {
     computed: {
+      btnProductText: function () {
+        return this.updateProduct ? 'Save changes' : ' Create new'
+      },
+      btnCategoryText: function () {
+        return this.updateCategory ? 'Save changes' : ' Create new'
+      },
       ...mapGetters({
         products: 'allProducts',
         categories: 'allCategories'
