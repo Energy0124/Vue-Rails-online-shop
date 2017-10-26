@@ -67,7 +67,7 @@
           <v-list-tile avatar v-for="product in products" v-bind:key="product.id"
                        @click.stop="selectProduct(product.id)">
             <v-list-tile-avatar>
-              <img v-bind:src=" this.$config.IMAGE_ROOT + product.image_url"/>
+              <img v-bind:src="$config.IMAGE_ROOT+ product.image_url"/>
             </v-list-tile-avatar>
             <v-list-tile-content>
               <v-list-tile-title v-text="product.name"></v-list-tile-title>

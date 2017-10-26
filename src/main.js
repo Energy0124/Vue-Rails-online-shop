@@ -18,6 +18,14 @@ const configs = {
   IMAGE_ROOT: 'http://localhost:3000' // It's better to require a config file
 }
 
+// Object.defineProperties(Vue.prototype, {
+//   $config: {
+//     get: function () {
+//       return configs
+//     }
+//   }
+// })
+
 Vue.use(vueConfig, configs)
 
 Vue.config.productionTip = false
