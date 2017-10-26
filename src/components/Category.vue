@@ -50,7 +50,7 @@
             to: '/home'
           },
           {
-            text: this.category.name,
+            text: this.categoryName,
             disabled: false,
             to: '/category/' + this.$route.params.categoryId
           }
@@ -61,6 +61,14 @@
       },
       category: function () {
         return this.allCategories.find(p => p.id === parseInt(this.$route.params.categoryId))
+      },
+      categoryName: function () {
+        let cat = this.allCategories.find(p => p.id === parseInt(this.$route.params.categoryId))
+        if (typeof cat !== 'undefined') {
+          return cat.name
+        } else {
+          return 'loading'
+        }
       },
       ...mapGetters({
         allProducts: 'allProducts',
@@ -211,6 +219,7 @@
     },
     created () {
       this.$store.dispatch('getAllProducts')
+      this.$store.dispatch('getAllCategories')
     },
     data () {
       return {

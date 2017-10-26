@@ -17,6 +17,11 @@
         <v-card>
           <v-form :v-model="validProduct" ref="productForm">
             <v-text-field
+              disabled
+              label="Id"
+              v-model="product.id"
+            ></v-text-field>
+            <v-text-field
               label="Name"
               v-model="product.name"
               required
@@ -45,11 +50,12 @@
             >
               submit
             </v-btn>
-            <v-btn @click="clear">clear</v-btn>
+            <v-btn @click="clearProduct">clear</v-btn>
           </v-form>
         </v-card>
         <v-list>
-          <v-list-tile avatar v-for="product in products" v-bind:key="product.name" @click="">
+          <v-list-tile avatar v-for="product in products" v-bind:key="product.id"
+                       @click.stop="selectProduct(product.id)">
             <v-list-tile-avatar>
               <img v-bind:src="product.image_url"/>
             </v-list-tile-avatar>
@@ -58,7 +64,7 @@
               <v-list-tile-sub-title>{{ product.id }}</v-list-tile-sub-title>
             </v-list-tile-content>
             <v-list-tile-action>
-              <v-btn icon ripple @click="deleteProduct(product.id)">
+              <v-btn icon ripple @click.stop="deleteProduct(product.id)">
                 <v-icon color="pink">delete</v-icon>
               </v-btn>
             </v-list-tile-action>
@@ -71,6 +77,11 @@
         <v-card>
           <v-form :v-model="validCategory" ref="categoryForm">
             <v-text-field
+              disabled
+              label="Id"
+              v-model="category.id"
+            ></v-text-field>
+            <v-text-field
               label="Name"
               v-model="category.name"
               required
@@ -81,17 +92,18 @@
             >
               submit
             </v-btn>
-            <v-btn @click="clear">clear</v-btn>
+            <v-btn @click="clearCategory">clear</v-btn>
           </v-form>
         </v-card>
         <v-list>
-          <v-list-tile avatar v-for="category in categories" v-bind:key="category.name" @click="">
+          <v-list-tile avatar v-for="category in categories" v-bind:key="category.id"
+                       @click="selectCategory(category.id)">
             <v-list-tile-content>
               <v-list-tile-title v-text="category.name"></v-list-tile-title>
               <v-list-tile-sub-title>{{ category.id }}</v-list-tile-sub-title>
             </v-list-tile-content>
             <v-list-tile-action>
-              <v-btn icon ripple @click="deleteCategory(category.id)">
+              <v-btn icon ripple @click.stop="deleteCategory(category.id)">
                 <v-icon color="pink">delete</v-icon>
               </v-btn>
             </v-list-tile-action>
@@ -118,7 +130,8 @@
         items: ['Products', 'Categories'],
         product: {},
         category: [],
-        update: false
+        updateProduct: false,
+        updateCategory: false
       }
     },
     created () {
@@ -126,6 +139,14 @@
       this.$store.dispatch('getAllCategories')
     },
     methods: {
+      selectProduct (id) {
+        this.product = Object.assign({}, this.product, this.products.find(p => p.id === id))
+        this.updateProduct = true
+      },
+      selectCategory (id) {
+        this.category = Object.assign({}, this.category, this.categories.find(p => p.id === id))
+        this.updateCategory = true
+      },
       deleteProduct (id) {
         this.$http.delete('products/' + id)
           .then((response) => {
@@ -143,30 +164,53 @@
       submitProduct () {
         if (this.$refs.productForm.validate()) {
           // Native form submission is not yet supported
-          this.$http.post('products', {
-            name: this.product.name,
-            price: this.product.price,
-            description: this.product.description,
-            category_id: this.product.category_id
-          }).then((response) => {
-            console.log(response)
-            this.$store.dispatch('getAllProducts')
-          })
+          if (this.updateProduct) {
+            this.$http.patch('products/' + this.product.id, this.product).then((response) => {
+              console.log(response)
+              this.$store.dispatch('getAllProducts')
+              this.updateProduct = false
+              this.clearProduct()
+            })
+          } else {
+            this.$http.post('products', this.product).then((response) => {
+              console.log(response)
+              this.$store.dispatch('getAllProducts')
+              this.updateProduct = false
+              this.clearProduct()
+            })
+          }
         }
       },
       submitCategory () {
         if (this.$refs.categoryForm.validate()) {
           // Native form submission is not yet supported
-          this.$http.post('categories', {
-            name: this.category.name
-          }).then((response) => {
-            console.log(response)
-            this.$store.dispatch('getAllCategories')
-          })
+          if (this.updateCategory) {
+            this.$http.patch('categories/' + this.category.id, this.category).then((response) => {
+              console.log(response)
+              this.$store.dispatch('getAllCategories')
+              this.updateCategory = false
+              this.clearCategory()
+            })
+          } else {
+            this.$http.post('categories', this.category)
+              .then((response) => {
+                console.log(response)
+                this.$store.dispatch('getAllCategories')
+                this.updateCategory = false
+                this.clearCategory()
+              })
+          }
         }
       },
-      clear () {
-        this.$refs.form.reset()
+      clearProduct () {
+        this.$refs.productForm.reset()
+        this.product = {}
+        this.updateProduct = false
+      },
+      clearCategory () {
+        this.$refs.categoryForm.reset()
+        this.category = {}
+        this.updateCategory = false
       }
     }
   }

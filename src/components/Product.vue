@@ -8,7 +8,7 @@
         {{ item.text }}
       </v-breadcrumbs-item>
     </v-breadcrumbs>
-    <h1>{{ msg }}</h1>
+ <!--   <h1>{{ msg }}</h1>-->
     <v-flex xs12 sm12 md8>
       <v-card>
         <v-card-media :src="item.image_url" height="500px">
@@ -37,6 +37,9 @@
   import { mapGetters } from 'vuex'
   export default {
     name: 'product',
+    created () {
+      this.$store.dispatch('getAllProducts')
+    },
     computed: {
       breadcrumbs: function () {
         return [
@@ -58,7 +61,7 @@
         ]
       },
       item: function () {
-        return this.products[parseInt(this.$route.params.productId, 10) - 1]
+        return this.products.find(p => p.id === (parseInt(this.$route.params.productId, 10)))
       },
       ...mapGetters({
         products: 'allProducts'
