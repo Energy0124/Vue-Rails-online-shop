@@ -14,8 +14,11 @@ Vue.use(VueResource)
 Vue.use(VueBreadcrumbs)
 
 const vueConfig = require('vue-config')
+// const configs = {
+//   IMAGE_ROOT: 'http://localhost:3000' // It's better to require a config file
+// }
 const configs = {
-  IMAGE_ROOT: 'http://localhost:3000' // It's better to require a config file
+  IMAGE_ROOT: 'http://52.42.184.70:3000' // It's better to require a config file
 }
 
 // Object.defineProperties(Vue.prototype, {
@@ -31,7 +34,8 @@ Vue.use(vueConfig, configs)
 Vue.config.productionTip = false
 
 // set the API root so we can use relative url's in our actions.
-Vue.http.options.root = 'http://localhost:3000'
+// Vue.http.options.root = 'http://localhost:3000'
+Vue.http.options.root = 'http://52.42.184.70:3000'
 
 const EventBus = new Vue()
 

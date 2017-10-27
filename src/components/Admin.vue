@@ -152,7 +152,7 @@
         validCategory: true,
         items: ['Products', 'Categories'],
         product: {},
-        category: [],
+        category: {},
         updateProduct: false,
         updateCategory: false
       }
