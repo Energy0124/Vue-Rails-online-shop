@@ -37,7 +37,12 @@ module Api
       # PATCH/PUT /products/1
       def update
         if @product.update(product_params)
-          render json: @product
+          @product.image_url = @product.picture.url
+          if @product.save
+            render json: @product
+          else
+            render json: @product.errors, status: :unprocessable_entity
+          end
         else
           render json: @product.errors, status: :unprocessable_entity
         end
