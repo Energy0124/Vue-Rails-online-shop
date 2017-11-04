@@ -21,7 +21,11 @@
       <v-divider></v-divider>
       <v-list>
 
-        <v-list-tile v-for="item in carts">
+        <v-list-tile v-for="(item, index) in carts">
+          <v-btn flat icon color="pink" v-on:click="removeFromCart(index)">
+            <v-icon>delete
+            </v-icon>
+          </v-btn>
           <v-list-tile-title>{{item.name}}</v-list-tile-title>
           <v-list-tile-action>
             <v-text-field class="item-count"
@@ -47,6 +51,12 @@
   export default {
     components: {
     },
+    localStorage: {
+      carts: {
+        type: Array,
+        default: []
+      }
+    },
     created () {
       this.$bus.$on('add-cart', (item) => {
         if (!item.hasOwnProperty('count')) {
@@ -59,11 +69,10 @@
           item.count = 1
           this.carts.push(item)
         }
-        this.total = 0
-        for (let k in this.carts) {
-          this.total += this.carts[k].price * this.carts[k].count
-        }
+        this.updateCart()
       })
+      this.carts = this.$localStorage.get('carts')
+      this.updateCart()
     },
     methods: {
       updateCart: function () {
@@ -71,6 +80,11 @@
         for (let k in this.carts) {
           this.total += this.carts[k].price * this.carts[k].count
         }
+        this.$localStorage.set('carts', this.carts)
+      },
+      removeFromCart: function (index) {
+        this.carts.splice(index, 1)
+        this.updateCart()
       }
     },
     data () {

@@ -8,10 +8,13 @@ import router from './router'
 import VueBreadcrumbs from 'vue-breadcrumbs'
 import store from './store'
 import VueResource from 'vue-resource'
+import VueLocalStorage from 'vue-localstorage'
 
 Vue.use(Vuetify)
 Vue.use(VueResource)
 Vue.use(VueBreadcrumbs)
+
+Vue.use(VueLocalStorage)
 
 const vueConfig = require('vue-config')
 // const configs = {
