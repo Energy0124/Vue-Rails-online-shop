@@ -6,6 +6,7 @@ module Api
       def create
         if correct_secret_api_key?
           user = User.new(user_params)
+          user.roles = 'user'
           if user.save
             render json: user, status: :created
           else

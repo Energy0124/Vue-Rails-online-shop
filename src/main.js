@@ -9,13 +9,16 @@ import VueBreadcrumbs from 'vue-breadcrumbs'
 import store from './store'
 import VueResource from 'vue-resource'
 import VeeValidate from 'vee-validate'
-
+import VueCookie from 'vue-cookie'
+import vueConfig from 'vue-config'
+// Tell Vue to use the plugin
+Vue.use(VueCookie)
 Vue.use(Vuetify)
 Vue.use(VueResource)
 Vue.use(VueBreadcrumbs)
 Vue.use(VeeValidate)
 
-const vueConfig = require('vue-config')
+// const vueConfig = require('vue-config')
 // const configs = {
 //   IMAGE_ROOT: 'http://localhost:3000' // It's better to require a config file
 // }

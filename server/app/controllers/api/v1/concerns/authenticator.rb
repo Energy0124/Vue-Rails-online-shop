@@ -21,6 +21,14 @@ module Api
         def auth_with_token!
           head :unauthorized unless user_signed_in?
         end
+
+        def auth_with_admin_token!
+          head :unauthorized unless user_signed_in? && user_is_admin?
+        end
+
+        def user_is_admin?
+          current_user.present? && @current_user.roles == 'admin'
+        end
       end
     end
   end

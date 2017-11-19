@@ -3,8 +3,8 @@ module Api
     class CategoriesController < ApiController
       before_action :set_category, only: [:show, :update, :destroy]
       # todo: fix permission
-      skip_before_action :auth_with_token!, except: []
-
+      skip_before_action :auth_with_token!, only:  [:show, :index]
+      before_action :auth_with_admin_token!, only:  [:create, :update, :destroy]
       # GET /categories
       def index
         @categories = Category.all
