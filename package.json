@@ -11,6 +11,7 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "vee-validate": "^2.0.0-rc.21",
     "vue": "^2.4.2",
     "vue-base64-file-upload": "^1.0.4",
     "vue-breadcrumbs": "^1.1.2",

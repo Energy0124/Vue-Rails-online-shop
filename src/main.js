@@ -8,10 +8,12 @@ import router from './router'
 import VueBreadcrumbs from 'vue-breadcrumbs'
 import store from './store'
 import VueResource from 'vue-resource'
+import VeeValidate from 'vee-validate'
 
 Vue.use(Vuetify)
 Vue.use(VueResource)
 Vue.use(VueBreadcrumbs)
+Vue.use(VeeValidate)
 
 const vueConfig = require('vue-config')
 // const configs = {
@@ -34,8 +36,12 @@ Vue.use(vueConfig, configs)
 Vue.config.productionTip = false
 
 // set the API root so we can use relative url's in our actions.
-// Vue.http.options.root = 'http://localhost:3000'
-Vue.http.options.root = 'http://52.42.184.70:3000'
+
+if (process.env.NODE_ENV === 'development') {
+  Vue.http.options.root = 'http://localhost:3000'
+} else {
+  Vue.http.options.root = 'http://52.42.184.70:3000'
+}
 
 const EventBus = new Vue()
 

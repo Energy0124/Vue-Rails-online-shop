@@ -29,6 +29,13 @@
     <v-toolbar-title v-text="title"></v-toolbar-title>
     <v-toolbar-items>
       <v-btn dark
+             to="/login"
+      >
+        Login
+      </v-btn>
+    </v-toolbar-items>
+    <v-toolbar-items>
+      <v-btn dark
         to="/admin"
       >
         Admin
