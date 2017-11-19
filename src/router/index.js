@@ -4,6 +4,7 @@ import Home from '@/components/Home'
 import Category from '@/components/Category'
 import Product from '@/components/Product'
 import Admin from '@/components/Admin'
+import Login from '@/components/Login'
 
 Vue.use(Router)
 
@@ -52,6 +53,13 @@ export default new Router({
       component: Admin,
       meta: {
         breadcrumb: 'Admin'
+      }
+    },
+    {
+      path: '/login',
+      component: Login,
+      meta: {
+        breadcrumb: 'Login'
       }
     }
   ]

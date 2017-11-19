@@ -8,15 +8,19 @@ import router from './router'
 import VueBreadcrumbs from 'vue-breadcrumbs'
 import store from './store'
 import VueResource from 'vue-resource'
+import VeeValidate from 'vee-validate'
+import VueCookie from 'vue-cookie'
 import VueLocalStorage from 'vue-localstorage'
-
+import vueConfig from 'vue-config'
+// Tell Vue to use the plugin
+Vue.use(VueCookie)
 Vue.use(Vuetify)
 Vue.use(VueResource)
 Vue.use(VueBreadcrumbs)
-
+Vue.use(VeeValidate)
 Vue.use(VueLocalStorage)
 
-const vueConfig = require('vue-config')
+// const vueConfig = require('vue-config')
 // const configs = {
 //   IMAGE_ROOT: 'http://localhost:3000' // It's better to require a config file
 // }
@@ -37,8 +41,12 @@ Vue.use(vueConfig, configs)
 Vue.config.productionTip = false
 
 // set the API root so we can use relative url's in our actions.
-// Vue.http.options.root = 'http://localhost:3000'
-Vue.http.options.root = 'http://52.42.184.70:3000'
+
+if (process.env.NODE_ENV === 'development') {
+  Vue.http.options.root = 'http://localhost:3000'
+} else {
+  Vue.http.options.root = 'http://52.42.184.70:3000'
+}
 
 const EventBus = new Vue()
 

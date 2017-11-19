@@ -39,7 +39,9 @@
               label="Image Url"
               v-model="product.image_url"
             ></v-text-field>
+
             <vue-base64-file-upload
+              v-if="showImageUpload"
               class="v1"
               accept='image/png,image/gif,image/jpeg'
               image-class="v1-image"
@@ -147,6 +149,7 @@
     },
     data () {
       return {
+        showImageUpload: true,
         customImageMaxSize: 10,
         validProduct: true,
         validCategory: true,
@@ -240,6 +243,8 @@
         this.$refs.productForm.reset()
         this.product = {}
         this.updateProduct = false
+        this.showImageUpload = false
+        setTimeout(function () { this.showImageUpload = true }.bind(this), 100)
       },
       clearCategory () {
         this.$refs.categoryForm.reset()

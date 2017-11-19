@@ -3,8 +3,8 @@ module Api
     class ProductsController < ApiController
       before_action :set_product, only: [:show, :update, :destroy]
       # todo: fix permission
-      skip_before_action :auth_with_token!, except: []
-
+      skip_before_action :auth_with_token!, only:  [:show, :index]
+      before_action :auth_with_admin_token!, only:  [:create, :update, :destroy]
 
       # GET /products
       def index
