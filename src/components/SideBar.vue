@@ -13,7 +13,7 @@
         :to="'/category/'+item.id"
       >
         <v-list-tile-action>
-          <v-icon light>{{item.icon}}</v-icon>
+          <v-icon light>bubble_chart</v-icon>
         </v-list-tile-action>
         <v-list-tile-content>
           <v-list-tile-title v-text="item.name"></v-list-tile-title>

@@ -26,24 +26,31 @@
           </v-btn>-->
 
     <!--<breadcrumbs></breadcrumbs>-->
-    <v-toolbar-title v-text="title"></v-toolbar-title>
-    <v-toolbar-items>
+    <v-toolbar-title @click="$router.push({path:'/home'})" v-text="title"></v-toolbar-title>
+    <v-toolbar-items v-if="user.roles === null">
       <v-btn dark
              to="/login"
       >
         Login
       </v-btn>
     </v-toolbar-items>
-    <v-toolbar-items>
+    <v-toolbar-items v-if="user.roles !== null">
       <v-btn dark
-        to="/admin"
+             @click="logout"
+      >
+        Logout
+      </v-btn>
+    </v-toolbar-items>
+    <v-toolbar-items v-if="user.roles === 'admin'">
+      <v-btn dark
+             to="/admin"
       >
         Admin
       </v-btn>
     </v-toolbar-items>
     <v-spacer></v-spacer>
 
-
+    <v-toolbar-title v-if="user.roles !== null">{{user.email}}</v-toolbar-title>
     <ShoppingCart></ShoppingCart>
     <!--<v-btn
       icon
@@ -57,7 +64,13 @@
 
 <script>
   import ShoppingCart from './ShoppingCart.vue'
+  import { mapGetters } from 'vuex'
   export default {
+    computed: {
+      ...mapGetters({
+        user: 'user'
+      })
+    },
     components: {
       ShoppingCart
     },
@@ -65,6 +78,20 @@
       return {
         drawer: true,
         title: 'IERG4210'
+      }
+    },
+    methods: {
+      logout: function () {
+        this.$http.delete('users/logout', {
+          headers: {
+            Authorization: this.user.auth_token
+          }
+        })
+          .then((response) => {
+          }, response => {
+          })
+        this.$store.dispatch('logout')
+        this.$router.push({path: '/login'})
       }
     }
   }

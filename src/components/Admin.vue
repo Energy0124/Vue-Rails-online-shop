@@ -144,7 +144,8 @@
       },
       ...mapGetters({
         products: 'allProducts',
-        categories: 'allCategories'
+        categories: 'allCategories',
+        user: 'user'
       })
     },
     data () {
@@ -161,6 +162,9 @@
       }
     },
     created () {
+      if (this.user.roles !== 'admin') {
+        this.$router.push({path: '/home'})
+      }
       this.$store.dispatch('getAllProducts')
       this.$store.dispatch('getAllCategories')
     },
@@ -185,14 +189,22 @@
         this.updateCategory = true
       },
       deleteProduct (id) {
-        this.$http.delete('products/' + id)
+        this.$http.delete('products/' + id, {
+          headers: {
+            Authorization: this.user.auth_token
+          }
+        })
           .then((response) => {
             console.log(response)
             this.$store.dispatch('getAllProducts')
           })
       },
       deleteCategory (id) {
-        this.$http.delete('categories/' + id)
+        this.$http.delete('categories/' + id, {
+          headers: {
+            Authorization: this.user.auth_token
+          }
+        })
           .then((response) => {
             console.log(response)
             this.$store.dispatch('getAllCategories')
@@ -202,14 +214,22 @@
         if (this.$refs.productForm.validate()) {
           // Native form submission is not yet supported
           if (this.updateProduct) {
-            this.$http.patch('products/' + this.product.id, this.product).then((response) => {
+            this.$http.patch('products/' + this.product.id, this.product, {
+              headers: {
+                Authorization: this.user.auth_token
+              }
+            }).then((response) => {
               console.log(response)
               this.$store.dispatch('getAllProducts')
               this.updateProduct = false
               this.clearProduct()
             })
           } else {
-            this.$http.post('products', this.product).then((response) => {
+            this.$http.post('products', this.product, {
+              headers: {
+                Authorization: this.user.auth_token
+              }
+            }).then((response) => {
               console.log(response)
               this.$store.dispatch('getAllProducts')
               this.updateProduct = false
@@ -222,14 +242,22 @@
         if (this.$refs.categoryForm.validate()) {
           // Native form submission is not yet supported
           if (this.updateCategory) {
-            this.$http.patch('categories/' + this.category.id, this.category).then((response) => {
+            this.$http.patch('categories/' + this.category.id, this.category, {
+              headers: {
+                Authorization: this.user.auth_token
+              }
+            }).then((response) => {
               console.log(response)
               this.$store.dispatch('getAllCategories')
               this.updateCategory = false
               this.clearCategory()
             })
           } else {
-            this.$http.post('categories', this.category)
+            this.$http.post('categories', this.category, {
+              headers: {
+                Authorization: this.user.auth_token
+              }
+            })
               .then((response) => {
                 console.log(response)
                 this.$store.dispatch('getAllCategories')

@@ -32,9 +32,13 @@
               counter
               required
             ></v-text-field>
+
             <v-btn @click="submit">submit</v-btn>
             <v-btn @click="clear">clear</v-btn>
           </form>
+          <v-alert v-if="loginFailed" error icon="warning" value="true" dismissible v-model="loginFailed">
+            Your entered email or password is incorrect. Please retry.
+          </v-alert>
         </v-card>
 
       </v-flex>
@@ -50,16 +54,40 @@
       return {
         hidePassword: true,
         email: '',
-        password: ''
+        password: '',
+        loginFailed: false
       }
     },
     methods: {
       submit () {
-        this.$validator.validateAll()
+        this.$validator.validateAll().then((result) => {
+          if (result) {
+            let user = {
+              user: {
+                email: this.email,
+                password: this.password
+              }
+            }
+            this.$http.post('users/login', user)
+              .then((response) => {
+                console.log(response)
+                user = response.body
+                this.$store.dispatch('updateUser', user)
+                if (user.roles === 'admin') {
+                  this.$router.push({path: '/admin'})
+                } else {
+                  this.$router.push({path: '/home'})
+                }
+              }, response => {
+                this.loginFailed = true
+              })
+          }
+        })
       },
       clear () {
         this.email = ''
         this.password = ''
+        this.loginFailed = false
         this.$validator.clean()
       },
       togglePassword () {
