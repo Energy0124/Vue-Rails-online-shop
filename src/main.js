@@ -45,7 +45,7 @@ Vue.config.productionTip = false
 if (process.env.NODE_ENV === 'development') {
   Vue.http.options.root = 'http://localhost:3000'
 } else {
-  Vue.http.options.root = 'http://52.42.184.70:3000'
+  Vue.http.options.root = 'https://s11.ierg4210.ie.cuhk.edu.hk/api/'
 }
 
 const EventBus = new Vue()
