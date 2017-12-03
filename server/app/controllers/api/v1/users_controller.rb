@@ -33,6 +33,15 @@ module Api
         reset_password_output(user)
       end
 
+      def info
+        if current_user
+          render json: current_user, status: :ok
+        else
+          head :unauthorized
+          false
+        end
+      end
+
       private
 
       def user_params

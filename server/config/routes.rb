@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       post   'users/login'          => 'sessions#create'
       delete 'users/logout'         => 'sessions#destroy'
       post   'users/reset_password' => 'users#reset_password'
+      post    'users/info'          => 'users#info'
       resources :users, only: [:create, :destroy]
       resources :notes
       resources :products

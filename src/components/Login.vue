@@ -70,7 +70,7 @@
             }
             this.$http.post('users/login', user)
               .then((response) => {
-                console.log(response)
+//                console.log(response)
                 user = response.body
                 this.$store.dispatch('updateUser', user)
                 if (user.roles === 'admin') {
