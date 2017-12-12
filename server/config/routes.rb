@@ -16,7 +16,9 @@ Rails.application.routes.draw do
       delete 'users/logout'         => 'sessions#destroy'
       post   'users/reset_password' => 'users#reset_password'
       post    'users/info'          => 'users#info'
+      post    'payments/create'          => 'orders#create_payment'
       resources :users, only: [:create, :destroy]
+      resources :orders, only: [:index, :show]
       resources :notes
       resources :products
       resources :categories

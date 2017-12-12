@@ -57,8 +57,12 @@
       ToolBar
     },
     created () {
-      let token = this.$localStorage.get('auth_token')
+      let paypalBtn = document.createElement('script')
+      paypalBtn.setAttribute('src', 'https://www.paypalobjects.com/api/checkout.js')
+      paypalBtn.setAttribute('data-version-4', '')
+      document.head.appendChild(paypalBtn)
 
+      let token = this.$localStorage.get('auth_token')
       if (token !== '') {
         this.$http.post('users/info', {}, {
           headers: {

@@ -13,7 +13,8 @@ gem 'pg'
 gem 'puma'
 
 # Use ActiveModel has_secure_password
-gem 'bcrypt', '~> 3.1.11'
+# gem 'bcrypt', '~> 3.1.11'
+gem 'bcrypt', '~> 3.1.11', platforms: [:ruby, :x64_mingw, :mingw]
 
 # json formatter
 gem 'active_model_serializers'
@@ -52,3 +53,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'carrierwave'
 
 gem 'carrierwave-base64'
+
+gem 'paypal-sdk-rest'

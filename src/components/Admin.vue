@@ -123,6 +123,18 @@
           </v-list-tile>
         </v-list>
       </v-tabs-content>
+      <v-tabs-content
+        :id="'tab-' + 'Orders'"
+      >
+        <v-list>
+          <v-list-tile avatar v-for="order in orders" v-bind:key="order.id">
+            <v-list-tile-content>
+              <v-list-tile-title v-text="order.payment_id"></v-list-tile-title>
+              <v-list-tile-sub-title>{{ '$' + order.total_price }}</v-list-tile-sub-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+      </v-tabs-content>
     </v-tabs-items>
   </v-tabs>
 </template>
@@ -155,11 +167,12 @@
         customImageMaxSize: 10,
         validProduct: true,
         validCategory: true,
-        items: ['Products', 'Categories'],
+        items: ['Products', 'Categories', 'Orders'],
         product: {},
         category: {},
         updateProduct: false,
-        updateCategory: false
+        updateCategory: false,
+        orders: []
       }
     },
     created () {
@@ -168,6 +181,17 @@
       }
       this.$store.dispatch('getAllProducts')
       this.$store.dispatch('getAllCategories')
+    },
+    mounted () {
+      this.$http.get('orders', {
+        headers: {
+          Authorization: this.user.auth_token
+        }
+      })
+        .then((response) => {
+          console.log(response)
+          this.orders = response.body
+        })
     },
     methods: {
       onFile (file) {

@@ -42,7 +42,8 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn flat @click="menu = false">Cancel</v-btn>
-        <v-btn primary flat @click="menu = false">Checkout</v-btn>
+        <!--<v-btn primary flat @click="menu = false">Checkout</v-btn>-->
+        <div id="myContainerElement" @click="clearCart"></div>
       </v-card-actions>
     </v-card>
   </v-menu>
@@ -74,6 +75,80 @@
       this.carts = this.$localStorage.get('carts')
       this.updateCart()
     },
+    updated () {
+      let carts = JSON.stringify(this.carts)
+      let clearCart = this.clearCart
+      if (this.firstRender) {
+//        let ajax = this.$http
+//        console.log(carts)
+        window.paypal.Button.render({
+
+          client: {
+            sandbox: 'AbvYt9vTE8tqnzfvFRJRrrUMSGA15Mn8bBfQGGf2H4Eqwz0QlFH4ZmV3HBbKEGe_2gN37QKLlX9rG1yK',
+            production: 'AbvYt9vTE8tqnzfvFRJRrrUMSGA15Mn8bBfQGGf2H4Eqwz0QlFH4ZmV3HBbKEGe_2gN37QKLlX9rG1yK'
+          },
+          // Set up a getter to create a Payment ID using the payments api, on your server side:
+          env: 'sandbox', // sandbox | production
+
+          // Show the buyer a 'Pay Now' button in the checkout flow
+          commit: true,
+//          payment: function (data, actions) {
+//            return actions.payment.create({
+//              payment: {
+//                transactions: [{
+//                  amount: {
+//                    total: '1.00',
+//                    currency: 'USD'
+//                  }
+//                }]
+//              }
+//            })
+//          },
+          payment: function (data, actions) {
+            clearCart()
+            return actions.request.post(window.apiRoot + 'payments/create', [carts])
+              .then(function (res) {
+//                console.log(res.id)
+                return res.id
+              })
+          },
+//            function () {
+//            return new window.paypal.Promise(function (resolve, reject) {
+//              // Make an ajax call to get the Payment ID. This should call your back-end,
+//              // which should invoke the PayPal Payment Create api to retrieve the Payment ID.
+//
+//              // When you have a Payment ID, you need to call the `resolve` method, e.g `resolve(data.paymentID)`
+//              // Or, if you have an error from your server side, you need to call `reject`, e.g. `reject(err)`
+//              ajax.post('payments/create', {})
+//                .then((response) => { return response.id }, (response) => { return response })
+//            })
+//          },
+
+          // Pass a function to be called when the customer approves the payment,
+          // then call execute payment on your server:
+
+          onAuthorize: function (data, actions) {
+            console.log('The payment was authorized!')
+            console.log('Payment ID = ', data.paymentID)
+            console.log('PayerID = ', data.payerID)
+
+            // At this point, the payment has been authorized, and you will need to call your back-end to complete the
+            // payment. Your back-end should invoke the PayPal Payment Execute api to finalize the transaction.
+            return actions.payment.execute().then(function (payment) {
+              console.log('Payment completed:', payment)
+            })
+          },
+          // Pass a function to be called when the customer cancels the payment
+
+          onCancel: function (data) {
+            console.log('The payment was cancelled!')
+            console.log('Payment ID = ', data.paymentID)
+          }
+
+        }, '#myContainerElement')
+        this.firstRender = false
+      }
+    },
     methods: {
       updateCart: function () {
         this.total = 0
@@ -85,6 +160,10 @@
         }
         this.$localStorage.set('carts', this.carts)
       },
+      clearCart: function () {
+        this.carts = []
+        this.updateCart()
+      },
       removeFromCart: function (index) {
         this.carts.splice(index, 1)
         this.updateCart()
@@ -94,7 +173,8 @@
       return {
         menu: false,
         carts: [],
-        total: 0
+        total: 0,
+        firstRender: true
       }
     }
   }
