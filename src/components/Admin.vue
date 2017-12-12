@@ -28,6 +28,7 @@
             ></v-text-field>
             <v-text-field
               label="Price"
+              type="number"
               v-model="product.price"
               required
             ></v-text-field>
@@ -53,6 +54,7 @@
             </vue-base64-file-upload>
             <v-text-field
               label="Category"
+              type="number"
               v-model="product.category_id"
               required
             ></v-text-field>
