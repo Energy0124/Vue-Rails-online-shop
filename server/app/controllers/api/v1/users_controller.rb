@@ -35,6 +35,10 @@ module Api
 
       def info
         if current_user
+          if current_user.last_login < Date.yesterday
+            head :unauthorized
+            false
+          end
           render json: current_user, status: :ok
         else
           head :unauthorized

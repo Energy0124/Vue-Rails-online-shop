@@ -25,6 +25,8 @@ module Api
         user = User.find_by_email(params[:user][:email])
         if user && user.authenticate(params[:user][:password])
           user.regenerate_auth_token
+          user.last_login = Time.now
+          user.save
           user
         end
       end

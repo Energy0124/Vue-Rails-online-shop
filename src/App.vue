@@ -69,6 +69,8 @@
           user = response.body
           this.$store.dispatch('updateUser', user)
           this.$localStorage.set('auth_token', user.auth_token)
+        }, response => {
+          this.$localStorage.set('auth_token', '')
         })
       }
     }
