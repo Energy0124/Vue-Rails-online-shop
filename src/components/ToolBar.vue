@@ -76,6 +76,12 @@
     },
     data () {
       return {
+        localStorage: {
+          auth_token: {
+            type: String,
+            default: ''
+          }
+        },
         drawer: true,
         title: 'IERG4210'
       }
@@ -91,6 +97,7 @@
           }, response => {
           })
         this.$store.dispatch('logout')
+        this.$localStorage.set('auth_token', '')
         this.$router.push({path: '/login'})
       }
     }

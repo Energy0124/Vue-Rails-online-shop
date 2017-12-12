@@ -55,6 +55,22 @@
     components: {
       SideBar,
       ToolBar
+    },
+    created () {
+      let token = this.$localStorage.get('auth_token')
+
+      if (token !== '') {
+        this.$http.post('users/info', {}, {
+          headers: {
+            Authorization: token
+          }
+        }).then((response) => {
+          let user = {}
+          user = response.body
+          this.$store.dispatch('updateUser', user)
+          this.$localStorage.set('auth_token', user.auth_token)
+        })
+      }
     }
   }
 </script>

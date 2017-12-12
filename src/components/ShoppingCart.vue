@@ -30,6 +30,7 @@
           <v-list-tile-action>
             <v-text-field class="item-count"
                           type="number"
+                          min="1"
                           name="count"
                           v-model="item.count"
                           @input="updateCart"
@@ -49,8 +50,7 @@
 
 <script>
   export default {
-    components: {
-    },
+    components: {},
     localStorage: {
       carts: {
         type: Array,
@@ -78,6 +78,9 @@
       updateCart: function () {
         this.total = 0
         for (let k in this.carts) {
+          if (this.carts[k].count < 1) {
+            this.carts[k].count = 1
+          }
           this.total += this.carts[k].price * this.carts[k].count
         }
         this.$localStorage.set('carts', this.carts)

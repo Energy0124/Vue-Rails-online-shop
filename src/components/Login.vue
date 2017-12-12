@@ -52,10 +52,37 @@
     $validates: true,
     data () {
       return {
+        localStorage: {
+          auth_token: {
+            type: String,
+            default: ''
+          }
+        },
         hidePassword: true,
         email: '',
         password: '',
         loginFailed: false
+      }
+    },
+    created () {
+      let token = this.$localStorage.get('auth_token')
+
+      if (token !== '') {
+        this.$http.post('users/info', {}, {
+          headers: {
+            Authorization: token
+          }
+        }).then((response) => {
+          let user = {}
+          user = response.body
+          this.$store.dispatch('updateUser', user)
+          this.$localStorage.set('auth_token', user.auth_token)
+          if (user.roles === 'admin') {
+            this.$router.push({path: '/admin'})
+          } else {
+            this.$router.push({path: '/home'})
+          }
+        })
       }
     },
     methods: {
@@ -73,6 +100,7 @@
 //                console.log(response)
                 user = response.body
                 this.$store.dispatch('updateUser', user)
+                this.$localStorage.set('auth_token', user.auth_token)
                 if (user.roles === 'admin') {
                   this.$router.push({path: '/admin'})
                 } else {
