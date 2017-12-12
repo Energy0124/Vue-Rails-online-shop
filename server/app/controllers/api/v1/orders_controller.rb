@@ -6,7 +6,7 @@ module Api
     class OrdersController < ApiController
       before_action :set_order, only: [:show, :update, :destroy]
       # todo: fix permission
-      skip_before_action :auth_with_token!, only: []
+      skip_before_action :auth_with_token!, only: [:create_payment]
       before_action :auth_with_admin_token!, only: [:index, :show]
 
       def create_payment
