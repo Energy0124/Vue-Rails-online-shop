@@ -39,6 +39,9 @@ const configs = {
 
 Vue.use(vueConfig, configs)
 
+var SocialSharing = require('vue-social-sharing')
+Vue.use(SocialSharing)
+
 Vue.config.productionTip = false
 
 // set the API root so we can use relative url's in our actions.
