@@ -1,12 +1,19 @@
 # IERG4210_2017
 
-> A Vue.js project
+> A Vue.js SPA online shop project
 
 Name: Ling Leong
 
 SID: 1155062557
 
-## Build Setup
+## PHASE 6: EXTENSIONS 
+- Mashup: Including a social plugin in the main page
+- Supporting AJAX file upload in the admin panel 
+- Using AJAX when browsing categories and products in the main page
+- Single page application (no refresh for entire site)
+
+
+## Client Build Setup
 
 ``` bash
 # install dependencies
@@ -22,4 +29,18 @@ npm run build
 npm run build --report
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## Server Build Setup
+
+``` bash
+# first you need to config the database config for PostgreSQL
+
+# install dependencies
+bundle install
+
+# setup database
+rails db:migrate
+
+# run rails server with hot reload at localhost:3000
+rails s
+
+```
