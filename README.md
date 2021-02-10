@@ -1,10 +1,6 @@
-# IERG4210_2017
+# Vue-Rails-online-shop
 
 > A Vue.js SPA online shop project
-
-Name: Ling Leong
-
-SID: 1155062557
 
 ## PHASE 6: EXTENSIONS 
 - Mashup: Including a social plugin in the main page
